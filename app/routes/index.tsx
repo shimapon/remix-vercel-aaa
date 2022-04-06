@@ -1,32 +1,26 @@
+import { useLoaderData } from "@remix-run/react";
+
+import { HeadersFunction, LoaderFunction } from "@remix-run/node";
+
+export const headers: HeadersFunction = () => {
+  return {
+    "Cache-Control": "max-age=0, s-maxage=30, stale-while-revalidate=30",
+  };
+};
+
+export const loader: LoaderFunction = () => {
+  return new Date().toUTCString();
+};
+
 export default function Index() {
+  const data = useLoaderData<string>();
+
   return (
-    <div style={{ fontFamily: "system-ui, sans-serif", lineHeight: "1.4" }}>
-      <h1>Welcome to Remix</h1>
-      <ul>
-        <li>
-          <a
-            target="_blank"
-            href="https://remix.run/tutorials/blog"
-            rel="noreferrer"
-          >
-            15m Quickstart Blog Tutorial
-          </a>
-        </li>
-        <li>
-          <a
-            target="_blank"
-            href="https://remix.run/tutorials/jokes"
-            rel="noreferrer"
-          >
-            Deep Dive Jokes App Tutorial
-          </a>
-        </li>
-        <li>
-          <a target="_blank" href="https://remix.run/docs" rel="noreferrer">
-            Remix Docs
-          </a>
-        </li>
-      </ul>
+    <div className="p-8">
+      <h1>swr</h1>
+      <p>{data}</p>
+      <h1>csr</h1>
+      <p>{new Date().toUTCString()}</p>
     </div>
   );
 }
